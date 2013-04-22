@@ -256,5 +256,59 @@ module Relevance
       end
     end
 
+
+    #### REST Request Related ####
+
+    # The queued rest request
+    attr_accessor :rest_fuzzer_queued
+
+    # Queue the rest route.
+    # options => :params, which is the known params for the URL.
+    def queue_rest_route(url, method = :get, options = {})
+      fuzzers.each do |fuzzer|
+        fuzzer.mutate(RestRoute.new(self, url, method, options)).each do |rest_fuzzer|
+
+          rest_fuzzer.url = transform_url(rest_fuzzer.url)
+          return if should_skip_rest_fuzzer?(rest_fuzzer)
+
+          @crawl_queue << rest_fuzzer
+          rest_fuzzer_queued << rest_fuzzer.signature
+
+        end
+      end
+    end
+
+    # After the response gotten from the server, this method processes
+    # it by running the response through the response handler registered on this crawler.
+    def handle_rest_fuzzer_results(rest_fuzzer, response)
+      handlers.each do |h|
+        result = Result.new(:method => rest_fuzzer.rest_route.method,
+                            :url => rest_fuzzer.url,
+                            :response => response,
+                            :log => grab_log!,
+                            :referrer => rest_fuzzer.url,
+                            :data => rest_fuzzer.data.inspect,
+                            :test_name => test_name)
+        result.fuzzer = rest_fuzzer if result.respond_to? :fuzzer=
+        save_result h.handle(result.freeze)
+      end
+    end
+
+    def rest_fuzzer_queued
+      @rest_fuzzer_queued = Set.new if @rest_fuzzer_queued.nil?
+      @rest_fuzzer_queued
+    end
+
+    # Method to check whether the rest fuzzer should be skipped and not run.
+    # Avoid having more than 1 rest fuzzer running with the same parameters, method, URL.
+    def should_skip_rest_fuzzer?(rf)
+      should_skip_url?(rf.url) || rest_fuzzer_queued.member?(rf.signature)
+    end
+
+    def report_rest_results
+      puts "Tried sending request for #{@rest_fuzzer_queued.count} route(s)."
+      generate_reports
+    end
+
   end
 end

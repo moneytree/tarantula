@@ -268,6 +268,12 @@ module Relevance
       fuzzers.each do |fuzzer|
         fuzzer.mutate(RestRoute.new(self, url, method, options)).each do |rest_fuzzer|
 
+          # if there is an :additional_expected_status_codes, add it up to the list of expected_status_codes on the
+          # rest_fuzzer.
+          unless options[:additional_expected_status_codes]
+            rest_fuzzer.expected_status_codes << options[:additional_expected_status_codes]
+          end
+
           rest_fuzzer.url = transform_url(rest_fuzzer.url)
           return if should_skip_rest_fuzzer?(rest_fuzzer)
 
@@ -295,7 +301,7 @@ module Relevance
     end
 
     def rest_fuzzer_queued
-      @rest_fuzzer_queued = Set.new if @rest_fuzzer_queued.nil?
+      @rest_fuzzer_queued ||= Set.new
       @rest_fuzzer_queued
     end
 

@@ -54,5 +54,8 @@ require "relevance/tarantula/link"
 
 require "relevance/tarantula/rest_route"
 require "relevance/tarantula/rest_json_response_handler"
+require "relevance/tarantula/rest_basic_attack"
+require "relevance/tarantula/rest_parameters_fuzzer"
+require "relevance/tarantula/rest_values_fuzzer"
 
 require "relevance/tarantula/tidy_handler" if ENV['TIDY_PATH']

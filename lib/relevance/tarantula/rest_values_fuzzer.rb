@@ -5,8 +5,8 @@ module Relevance
     # object. (with uri.encoded)
     class RestValuesFuzzer < RestParametersFuzzer
 
-      def initialize
-        super.initialize
+      def initialize(rest_route, attack)
+        super.initialize(rest_route, attack)
         @expected_status_codes = %w(400 403 404 422)
       end
 

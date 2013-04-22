@@ -4,6 +4,8 @@ module Relevance
     # This fuzzer would try to create a random number of key-and-value pair, which keys and values are also totally random
     # and could be crap and send those as a HTTPrequest to the designated url.
     class RestParametersFuzzer
+      include Relevance::Tarantula
+
       attr_accessor :rest_route, :url, :data, :attack, :expected_status_codes
 
       class << self

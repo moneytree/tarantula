@@ -7,7 +7,7 @@ module Relevance
 
       def initialize(rest_route, attack)
         super.initialize(rest_route, attack)
-        @expected_status_codes = %w(400 403 404 422)
+        super.expected_status_codes = %w(400 403 404 422)
       end
 
       def generate_data

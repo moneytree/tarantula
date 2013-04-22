@@ -8,3 +8,7 @@ TAGS
 coverage
 *.gem
 Gemfile.lock
+
+# If RubyMine is used as an IDE, ignore the folder for its metadata.
+.idea
+.idea/* 

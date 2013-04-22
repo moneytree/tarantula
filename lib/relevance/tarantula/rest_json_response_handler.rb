@@ -36,8 +36,8 @@ module Relevance
           # compare whether the status code from the result object is one of the expected results
           # from the fuzzer.
           fuzzer = result.fuzzer
-          status_code = result.response.status
-          fuzzer.expected_status_codes.include? status_code
+          code = result.response.code
+          fuzzer.expected_status_codes.include? code
         end
       end
 

@@ -20,7 +20,7 @@ module Relevance
 
         # Give a nicer looking test name.
         name = self.method_name.split("_").map{|k| k.capitalize}.join(" ")
-        t.test_name = "#{name} - #{Time.now.inspect()}"
+        t.test_name = "#{name}"
 
         # Return
         t

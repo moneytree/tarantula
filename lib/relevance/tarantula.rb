@@ -52,4 +52,7 @@ require "relevance/tarantula/attack"
 require "relevance/tarantula/attack_handler"
 require "relevance/tarantula/link"
 
+require "relevance/tarantula/rest_route"
+require "relevance/tarantula/rest_json_response_handler"
+
 require "relevance/tarantula/tidy_handler" if ENV['TIDY_PATH']

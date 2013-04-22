@@ -1,7 +1,7 @@
 module Relevance
   module Tarantula
 
-    # Monkey patch the result class to have a rest_route
+    # Monkey patch the result class to have a fuzzer
     class Result
       attr_accessor :fuzzer
     end

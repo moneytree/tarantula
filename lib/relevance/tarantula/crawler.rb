@@ -270,10 +270,7 @@ module Relevance
 
           # if there is an :additional_expected_status_codes, add it up to the list of expected_status_codes on the
           # rest_fuzzer.
-          unless options[:additional_expected_status_codes]
-            rest_fuzzer.expected_status_codes << options[:additional_expected_status_codes]
-          end
-
+          rest_fuzzer.expected_status_codes = options[:expected_status_codes] if options[:expected_status_codes]
           rest_fuzzer.url = transform_url(rest_fuzzer.url)
           return if should_skip_rest_fuzzer?(rest_fuzzer)
 

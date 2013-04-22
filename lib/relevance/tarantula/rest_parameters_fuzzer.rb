@@ -45,7 +45,7 @@ module Relevance
 
         # Data would generate the random data and would pre-fill the default expected status codes
         @data = generate_data
-        @expected_status_codes = %w(400 403 404 422)
+        @expected_status_codes = %w(400 422)
       end
 
       # This method name is not really clear, even if it doesn't do "crawl", but this method

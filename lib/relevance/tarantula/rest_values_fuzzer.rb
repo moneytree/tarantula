@@ -5,11 +5,6 @@ module Relevance
     # object. (with uri.encoded)
     class RestValuesFuzzer < RestParametersFuzzer
 
-      def initialize(rest_route, attack)
-        super(rest_route, attack)
-        @expected_status_codes = %w(400 403 404 422)
-      end
-
       def generate_data
         # What to generate if we dont have known parameters
         return if rest_route.params.nil?

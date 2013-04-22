@@ -289,7 +289,7 @@ module Relevance
                             :referrer => rest_fuzzer.url,
                             :data => rest_fuzzer.data.inspect,
                             :test_name => test_name)
-        result.fuzzer = rest_fuzzer
+        result.fuzzer = rest_fuzzer if result.respond_to? :fuzzer=
         save_result h.handle(result.freeze)
       end
     end

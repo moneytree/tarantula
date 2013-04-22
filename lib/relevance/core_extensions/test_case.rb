@@ -11,6 +11,21 @@ module Relevance
       def tarantula_crawler(integration_test, options = {})
         Relevance::Tarantula::RailsIntegrationProxy.rails_integration_test(integration_test, options)
       end
+
+      def tarantula_rest_fuzzer(integration_test, options = {})
+        # Setup both the basic fuzzers and the basic json handlers.
+        t = tarantula_crawler(integration_test, options)
+        t.fuzzers = [Relevance::Tarantula::RestParametersFuzzer, Relevance::Tarantula::RestValuesFuzzer]
+        t.handlers = [Relevance::Tarantula::RestJSONResponseHandler]
+
+        # Give a nicer looking test name.
+        name = self.method_name.split("_").map{|k| k.capitalize}.join(" ")
+        t.test_name = "#{name} - #{Time.now.inspect()}"
+
+        # Return
+        t
+      end
+
     end
 
   end

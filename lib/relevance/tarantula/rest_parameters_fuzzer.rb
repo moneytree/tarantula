@@ -107,7 +107,7 @@ module Relevance
         # Changed every :param with the real param from the inpu
         new_url = url
         url_params.each do |url_param|
-          new_url.gsub(url_param, attack.input)
+          new_url.gsub!(url_param, attack.input)
         end
 
         # Return with the new url

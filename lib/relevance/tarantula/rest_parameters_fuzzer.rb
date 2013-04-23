@@ -105,7 +105,7 @@ module Relevance
         return nil unless url_params && url_params.count > 0
 
         # Changed every :param with the real param from the inpu
-        new_url = url
+        new_url = url.dup
         url_params.each do |url_param|
           new_url.gsub!(url_param, attack.input)
         end

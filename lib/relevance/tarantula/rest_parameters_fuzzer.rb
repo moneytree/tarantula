@@ -101,7 +101,7 @@ module Relevance
         return unless rest_route.params
 
         # Return if we dont have anything to be swapped
-        url_params = rest_route.params.map{|param| param.start_with? ":"}
+        url_params = rest_route.params.select{|param| param.start_with? ":"}
         return nil unless url_params && url_params.count > 0
 
         # Changed every :param with the real param from the inpu

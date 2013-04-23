@@ -10,8 +10,9 @@ module Relevance
         def mutate(rest_route)
           return [] if rest_route.params.nil?
 
-          # Call the super here if we have the params
-          RestParametersFuzzer.mutate(rest_route)
+          # Calling super here doesnt really work,
+          # generate_data method of this instance does not get call, instead the super will be called.
+          attacks.map{|attack| new(rest_route, attack)}
         end
       end
 

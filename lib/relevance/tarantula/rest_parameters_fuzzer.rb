@@ -83,7 +83,10 @@ module Relevance
       # A form's signature is what makes it unique (e.g. action + fields)
       # used to keep track of which forms we have submitted already
       def signature
-        [url, rest_route.method, data.keys.sort, attack]
+        # Its possible to not have the params associated with the fuzzer, if thats the case,
+        # Make the data_keys blank array.
+        data_keys = data and data.kind_of? Hash ? data.keys.sort : []
+        [url, rest_route.method, data_keys, attack]
       end
 
       def to_s

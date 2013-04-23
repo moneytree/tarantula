@@ -46,6 +46,9 @@ module Relevance
         # Data would generate the random data and would pre-fill the default expected status codes
         @data = generate_data
         @expected_status_codes = %w(400 422)
+
+        # New url if there are :params on the url
+        _replace_url_params
       end
 
       # This method name is not really clear, even if it doesn't do "crawl", but this method
@@ -91,6 +94,25 @@ module Relevance
 
       def to_s
         "#{url} - #{rest_route.inspect}"
+      end
+
+      def _replace_url_params
+        # Return if we dont have any params
+        return unless rest_route.params
+
+        # Return if we dont have anything to be swapped
+        url_params = rest_route.params.map{|param| param.start_with? ":"}
+        return nil unless url_params && url_params.count > 0
+
+        # Changed every :param with the real param from the inpu
+        new_url = url
+        url_params.each do |url_param|
+          new_url.gsub(url_param, attack.input)
+        end
+
+        # Return with the new url
+        log "Changing #{url} to be #{new_url}"
+        @url = new_url
       end
 
     end

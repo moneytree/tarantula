@@ -85,7 +85,7 @@ module Relevance
       def signature
         # Its possible to not have the params associated with the fuzzer, if thats the case,
         # Make the data_keys blank array.
-        data_keys = data and data.kind_of? Hash ? data.keys.sort : []
+        data_keys = (data and data.kind_of? Hash) ? data.keys.sort : []
         [url, rest_route.method, data_keys, attack]
       end
 

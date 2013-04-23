@@ -110,6 +110,9 @@ module Relevance
           new_url.gsub!(url_param, attack.input)
         end
 
+        # Delete that generated data before. (part of the http body when request is sent)
+        @data.delete_if {|key, value| url_params.include? key }
+
         # Return with the new url
         log "Changing #{url} to be #{new_url}"
         @url = new_url

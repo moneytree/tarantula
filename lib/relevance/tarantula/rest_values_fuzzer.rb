@@ -5,6 +5,16 @@ module Relevance
     # object. (with uri.encoded)
     class RestValuesFuzzer < RestParametersFuzzer
 
+      class << self
+        # For every attack registered on this fuzzer, create a different fuzzer.
+        def mutate(rest_route)
+          return [] if rest_route.params.nil?
+
+          # Call the super here if we have the params
+          RestParametersFuzzer.mutate(rest_route)
+        end
+      end
+
       def generate_data
         # What to generate if we dont have known parameters
         return if rest_route.params.nil?
